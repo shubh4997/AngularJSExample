@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"> </script>
+    </head>
+    <body>
+        <div ng-app="bill" ng-controller="BillController">
+            <table border="1" width="1" cellspacing="1" cellpadding="1">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in bill.items">
+                        <td><input type="text" ng-model="item.name" /></td>
+                        <td><input type="number" ng-model="item.qty" /></td>
+                        <td><input type="number" ng-model="item.price" /></td>
+                        <td>{{item.qty*item.price}}</td>
+                        <td><input type="button" value="Remove" ng-click="remove($index)"/></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Add" ng-click="add()" /></td>
+                        <td></td>
+                        <td>Total:</td>
+                        <td>{{total()}}</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            
+            
+            
+        </div>
+    </body>
+    <script ng-app="bill" >
+        var myapp=angular.module("bill",[]);
+        myapp.controller("BillController",function($scope){
+           $scope.bill={
+             items:[{
+                     name:'',
+                     qty:1,
+                     price:0
+             }
+                 
+             ]  
+               
+           };
+           
+           $scope.add=function()
+           {
+               $scope.bill.items.push({
+                   name:'',
+                   qty:1,
+                   price:0
+               });
+           },
+           
+           $scope.remove=function(index)
+           {
+               $scope.bill.items.splice(index,1);
+           },
+           
+           $scope.total=function()
+           {
+               var total=0;
+               angular.forEach($scope.bill.items,function(item){
+                  total+=item.qty*item.price; 
+               });
+               return total;
+               
+           };
+        });
+        </script>
+</html>
